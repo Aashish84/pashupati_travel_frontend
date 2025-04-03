@@ -10,18 +10,17 @@ import styles from "./Home.module.css"
 
 function Home(){
     return (
-        <div>
-        {/* <Navbar /> */}
-        <main className={styles.main}>
-            <ImageSlider />
-            <AboutSection />
-            <FeaturedDestinations />
-            <ServicesSection />
-            <TestimonialsSection />
-            <ContactSection />
-        </main>
-        <Footer />
-    </div>
+        <>
+            <main className={styles.main}>
+                <ImageSlider />
+                <AboutSection />
+                <FeaturedDestinations />
+                <ServicesSection />
+                <TestimonialsSection />
+                <ContactSection />
+            </main>
+            <Footer />
+        </>
     )
 }
 
