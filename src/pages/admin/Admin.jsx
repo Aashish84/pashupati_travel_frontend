@@ -1,11 +1,18 @@
+import { Outlet } from "react-router-dom"
 import styles from "./Admin.module.css"
+import AdminNavbar from "./AdminNavbar"
 
 
 function Admin(){
     return(
-        <div className={styles.mainContent}>
-            <h1>this is admin</h1>
-        </div>
+        <>
+        <div className={styles.adminContainer}>
+            <AdminNavbar />
+            <div className={styles.mainAdminContent}>
+                <Outlet />
+            </div>
+         </div>
+        </>
     )
 }
 

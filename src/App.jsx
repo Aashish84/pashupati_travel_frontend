@@ -7,6 +7,7 @@ import Login from './pages/login/Login';
 import Home from './pages/home/Home';
 import Navbar from './components/Navbar';
 import Admin from './pages/admin/Admin';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 function App() {
 
@@ -20,11 +21,14 @@ function App() {
           <Route path="/home" element={<Home />} />
 
           <Route element={<ProtectedRoute role={role} />}>
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin" element={<Admin />} >
+              <Route path='dashboard' element={<AdminDashboard />}/>
+              <Route path="/admin/*" element={<h1>404 Page Not found in admin side</h1>} />
+            </Route>
           </Route>
 
           <Route path="/login" element={<Login setRole={setRole} />} />
-          <Route path="*" element={<h1>Not found</h1>} />
+          <Route path="*" element={<h1>404 Page Not found</h1>} />
         </Routes>
       </div>
     </>
