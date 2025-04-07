@@ -12,7 +12,7 @@ function AdminNavbar(){
                         <Link to="/admin/dashboard" className={styles.navItem}>Dashboard</Link>
                     </li>
                     <li>
-                        <Link to="/admin/users" className={styles.navItem}>Users</Link>
+                        <Link to="/admin/featured" className={styles.navItem}>Featured Destination</Link>
                     </li>
                     <li>
                         <Link to="/admin/settings" className={styles.navItem}>Settings</Link>

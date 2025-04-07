@@ -8,6 +8,7 @@ import Home from './pages/home/Home';
 import Navbar from './components/Navbar';
 import Admin from './pages/admin/Admin';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminFeaturedDestinations from './pages/admin/AdminFeaturedDestinations';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route element={<ProtectedRoute role={role} />}>
             <Route path="/admin" element={<Admin />} >
               <Route path='dashboard' element={<AdminDashboard />}/>
+              <Route path='featured' element={<AdminFeaturedDestinations />} />
               <Route path="/admin/*" element={<h1>404 Page Not found in admin side</h1>} />
             </Route>
           </Route>
