@@ -34,3 +34,28 @@
     gap: 1rem;
   }
   
+
+  .modalButton {
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .modalButtonSubmit{
+    background-color: #10b981;
+  }
+  
+  .modalButtonSubmit:hover {
+    background-color: #059669;
+  }
+
+  .modalButtonCancel{
+      background-color: #ef4444;
+  }
+  
+  .modalButtonCancel:hover {
+    background-color: #dc2626;
+  }

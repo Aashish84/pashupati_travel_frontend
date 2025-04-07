@@ -64,8 +64,8 @@ export default function AdminFeaturedDestionationsModal({showModal , setShowModa
                         required
                     />
                     <div className={styles.modalActions}>
-                        <button type="submit">Submit</button>
-                        <button type="button" onClick={handleCloseModal}>
+                        <button type="submit" className={`${styles.modalButton} ${styles.modalButtonSubmit}`}>Submit</button>
+                        <button type="button" className={`${styles.modalButton} ${styles.modalButtonCancel}`} onClick={handleCloseModal}>
                             Cancel
                         </button>
                     </div>
