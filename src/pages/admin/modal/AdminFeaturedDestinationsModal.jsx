@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import styles from "./AdminFeaturedDestinationsModal.module.css"
 
-export default function AdminFeaturedDestionationsModal({showModal , setShowModal}){
+export default function AdminFeaturedDestionationsModal({setShowModal}){
     const [formData, setFormData] = useState({
         name: "",
         image: "",
@@ -65,9 +65,7 @@ export default function AdminFeaturedDestionationsModal({showModal , setShowModa
                     />
                     <div className={styles.modalActions}>
                         <button type="submit" className={`${styles.modalButton} ${styles.modalButtonSubmit}`}>Submit</button>
-                        <button type="button" className={`${styles.modalButton} ${styles.modalButtonCancel}`} onClick={handleCloseModal}>
-                            Cancel
-                        </button>
+                        <button type="button" className={`${styles.modalButton} ${styles.modalButtonCancel}`} onClick={handleCloseModal}>Cancel</button>
                     </div>
                 </form>
             </div>

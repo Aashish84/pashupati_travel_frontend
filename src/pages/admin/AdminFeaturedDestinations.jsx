@@ -40,7 +40,7 @@ export default function AdminFeaturedDestinations() {
 
       {/* Modal */}
       {showModal && (
-        <AdminFeaturedDestionationsModal showModal={showModal} setShowModal={setShowModal}/>
+        <AdminFeaturedDestionationsModal setShowModal={setShowModal}/>
       )}
 
       {/* Table */}
