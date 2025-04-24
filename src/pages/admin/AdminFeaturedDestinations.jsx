@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./AdminFeaturedDestinations.module.css";
 import AdminFeaturedDestionationsModal from "./modal/AdminFeaturedDestinationsModal.jsx";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-const featuredDestinations = [
+const initialFeaturedDestinations = [
   {
     id: 6,
     name: "Annapurna Circuit",
@@ -14,6 +16,32 @@ const featuredDestinations = [
 ];
 
 export default function AdminFeaturedDestinations() {
+  const [featuredDestinations, setFeaturedDestinations] = useState(initialFeaturedDestinations);
+  const token = useSelector((store) => store?.auth?.token);
+
+
+  async function getAllFeaturedDestination() {
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL}/admin/featuredDestination`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        }
+      );
+      setFeaturedDestinations(data)
+      console.log(data);
+
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
+  useEffect(() => {
+    getAllFeaturedDestination();
+  }, [])
+
   const [showModal, setShowModal] = useState(false);
 
   const handleAddNew = () => {
@@ -40,7 +68,7 @@ export default function AdminFeaturedDestinations() {
 
       {/* Modal */}
       {showModal && (
-        <AdminFeaturedDestionationsModal setShowModal={setShowModal}/>
+        <AdminFeaturedDestionationsModal setShowModal={setShowModal} />
       )}
 
       {/* Table */}
@@ -49,7 +77,7 @@ export default function AdminFeaturedDestinations() {
           <tr>
             <th>ID</th>
             <th>Image</th>
-            <th>Name</th>
+            <th>Destination</th>
             <th>Description</th>
             <th>Price</th>
             <th>Actions</th>
@@ -60,13 +88,11 @@ export default function AdminFeaturedDestinations() {
             <tr key={dest.id}>
               <td>{dest.id}</td>
               <td>
-                <img
-                  src={dest.image}
-                  alt={dest.name}
-                  className={styles.image}
-                />
+                <a href={`${import.meta.env.VITE_SERVER_URL}/file/${dest.image}`} target="_blank">
+                  click here
+                </a>
               </td>
-              <td>{dest.name}</td>
+              <td>{dest.destination}</td>
               <td>{dest.description}</td>
               <td>{dest.price}</td>
               <td>

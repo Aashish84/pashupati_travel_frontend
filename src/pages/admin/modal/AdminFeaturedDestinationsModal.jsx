@@ -1,30 +1,66 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 import styles from "./AdminFeaturedDestinationsModal.module.css"
 
 export default function AdminFeaturedDestionationsModal({setShowModal}){
     const [formData, setFormData] = useState({
-        name: "",
-        image: "",
+        destination: "",
+        image: null,
         description: "",
-        price: "",
+        price: 0,
     });
+    const token = useSelector((store) => store?.auth?.token);
+
+
+    async function saveFeaturedDestination() {
+        const featuredDestination = {
+            destination: formData.destination,
+            description: formData.description,
+            price: formData.price,
+          };
+
+        const finalFormData = new FormData();
+        finalFormData.append("featuredDestinationString" , JSON.stringify(featuredDestination));
+        finalFormData.append("image" , formData.image);
+
+        try {
+            const { data } = await axios.post(`${import.meta.env.VITE_SERVER_URL}/admin/featuredDestination`, finalFormData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const handleFormChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        const { name, value, type, files } = e.target;
+
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: type === "file" ? files[0] : name === "price" ? Number(value) : value,
+        }));
+        console.log({formData});
+        
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Form submitted:", formData);
+        e.preventDefault();;
+        saveFeaturedDestination()
         handleCloseModal();
     };
 
 
     const handleCloseModal = () => {
         setShowModal(false);
-        setFormData({ name: "", image: "", description: "", price: "" });
+        setFormData({ destination: "", image: null, description: "", price: 0});
     };
 
     return (
@@ -34,17 +70,16 @@ export default function AdminFeaturedDestionationsModal({setShowModal}){
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <input
                         type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={formData.name}
+                        name="destination"
+                        placeholder="destination"
+                        value={formData.destination}
                         onChange={handleFormChange}
                         required
                     />
                     <input
-                        type="text"
+                        type="file"
                         name="image"
-                        placeholder="Image URL"
-                        value={formData.image}
+                        placeholder="image file"
                         onChange={handleFormChange}
                         required
                     />
@@ -56,7 +91,7 @@ export default function AdminFeaturedDestionationsModal({setShowModal}){
                         required
                     ></textarea>
                     <input
-                        type="text"
+                        type="number"
                         name="price"
                         placeholder="Price"
                         value={formData.price}
@@ -69,6 +104,6 @@ export default function AdminFeaturedDestionationsModal({setShowModal}){
                     </div>
                 </form>
             </div>
-        </div>
+        </div>  
     )
 }
