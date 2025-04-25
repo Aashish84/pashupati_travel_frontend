@@ -5,20 +5,20 @@ import AdminFeaturedDestionationsModal from "./modal/AdminFeaturedDestinationsMo
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const initialFeaturedDestinations = [
-  {
-    id: 6,
-    name: "Annapurna Circuit",
-    image: "/placeholder.svg?height=300&width=400",
-    description: "Embark on one of the most diverse treks in the Himalayas.",
-    price: "From $1199",
-  },
-];
+const initialFeaturedDestinations = {
+  id: 0,
+  name: "",
+  image: null,
+  description: "",
+  price: "",
+};
 
 export default function AdminFeaturedDestinations() {
-  const [featuredDestinations, setFeaturedDestinations] = useState(initialFeaturedDestinations);
-  const token = useSelector((store) => store?.auth?.token);
+  const [showModal, setShowModal] = useState(false);
+  const [featuredDestinations, setFeaturedDestinations] = useState([]);
+  const [editingData, setEditingData] = useState(null);
 
+  const token = useSelector((store) => store?.auth?.token);
 
   async function getAllFeaturedDestination() {
     try {
@@ -30,32 +30,52 @@ export default function AdminFeaturedDestinations() {
         }
       );
       setFeaturedDestinations(data)
-      console.log(data);
-
+      console.log("initial get ::",  data );
+      
     } catch (error) {
       console.log(error);
-
     }
   }
 
   useEffect(() => {
     getAllFeaturedDestination();
-  }, [])
-
-  const [showModal, setShowModal] = useState(false);
+  }, []);
 
   const handleAddNew = () => {
+    setEditingData(initialFeaturedDestinations);
     setShowModal(true);
   };
 
 
   const handleUpdate = (id) => {
-    alert(`Update destination with ID: ${id}`);
+    const destinationToEdit = featuredDestinations.find(dest => dest.id === id);
+    if (!destinationToEdit) {
+      alert("Destination not found!");
+      return;
+    }
+
+    setEditingData(destinationToEdit);
+    setShowModal(true);
   };
 
-  const handleDelete = (id) => {
-    alert(`Delete destination with ID: ${id}`);
-  };
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(`Are you sure you want to delete destination with ID: ${id}?`);
+  
+    if (!confirmDelete) return;
+  
+    try {
+      const {data} = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/admin/featuredDestination/${id}`, {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      });
+      setFeaturedDestinations((prev) => prev.filter(dest => dest.id !== id));
+      alert("Destination deleted successfully.");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete destination.");
+    }
+  };  
 
   return (
     <div className={styles.container}>
@@ -68,7 +88,7 @@ export default function AdminFeaturedDestinations() {
 
       {/* Modal */}
       {showModal && (
-        <AdminFeaturedDestionationsModal setShowModal={setShowModal} />
+        <AdminFeaturedDestionationsModal setShowModal={setShowModal} setFeaturedDestinations={setFeaturedDestinations} initialData={editingData}/>
       )}
 
       {/* Table */}

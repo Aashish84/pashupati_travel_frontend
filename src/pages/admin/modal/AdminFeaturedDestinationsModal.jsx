@@ -1,21 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 import styles from "./AdminFeaturedDestinationsModal.module.css"
 
-export default function AdminFeaturedDestionationsModal({setShowModal}){
-    const [formData, setFormData] = useState({
-        destination: "",
-        image: null,
-        description: "",
-        price: 0,
-    });
+export default function AdminFeaturedDestionationsModal({setShowModal , setFeaturedDestinations , initialData}){
+    const [formData, setFormData] = useState({});
     const token = useSelector((store) => store?.auth?.token);
 
+    useEffect(() => {
+        console.log("modal initial data ::" , initialData);
+        
+        if (initialData) {
+          setFormData({
+            id:initialData.id || 0,
+            destination: initialData.destination || "",
+            description: initialData.description || "",
+            price: initialData.price || 0,
+          });
+        }
+
+        console.log("initial modal form data ",formData);
+        
+      }, [initialData])
 
     async function saveFeaturedDestination() {
         const featuredDestination = {
+            id:initialData.id,
             destination: formData.destination,
             description: formData.description,
             price: formData.price,
@@ -34,7 +45,20 @@ export default function AdminFeaturedDestionationsModal({setShowModal}){
                     }
                 }
             );
-            console.log(data);
+            console.log("after saved " , data);
+            // setFeaturedDestinations(prev => [...prev , data])
+
+            setFeaturedDestinations((prev) => {
+                const index = prev.findIndex(dest => dest.id === data.id);
+                if (index !== -1) {
+                    const updated = [...prev];
+                    updated[index] = data;
+                    return updated;
+                } else {
+                    return [...prev, data];
+                }
+            });
+
         } catch (error) {
             console.log(error);
         }
@@ -81,7 +105,7 @@ export default function AdminFeaturedDestionationsModal({setShowModal}){
                         name="image"
                         placeholder="image file"
                         onChange={handleFormChange}
-                        required
+                        // required
                     />
                     <textarea
                         name="description"
