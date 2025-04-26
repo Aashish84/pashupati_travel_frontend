@@ -8,18 +8,21 @@ function AdminNavbar(){
             <div className={styles.sidebar}>
                 <h2 className={styles.logo}>Admin Panel</h2>
                 <ul className={styles.navList}>
-                    <li>
+                    {/* <li>
                         <Link to="/admin/dashboard" className={styles.navItem}>Dashboard</Link>
+                    </li> */}
+                    <li>
+                        <Link to="/admin/featured" className={styles.navItem}>BANNER</Link>
                     </li>
                     <li>
-                        <Link to="/admin/featured" className={styles.navItem}>Featured Destination</Link>
+                        <Link to="/admin/featured" className={styles.navItem}>FEATURED DESTINATIONS</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link to="/admin/settings" className={styles.navItem}>Settings</Link>
                     </li>
                     <li>
                         <Link to="/logout" className={styles.navItem}>Logout</Link>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         </>

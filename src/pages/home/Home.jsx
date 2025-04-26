@@ -16,7 +16,7 @@ function Home(){
                 <AboutSection />
                 <FeaturedDestinations />
                 <ServicesSection />
-                <TestimonialsSection />
+                {/* <TestimonialsSection /> */}
                 <ContactSection />
             </main>
             <Footer />

@@ -88,11 +88,11 @@ const Navbar = () => {
                     Services
                   </a>
                 </li>
-                <li className={styles.navItem}>
+                {/* <li className={styles.navItem}>
                   <a href="#testimonials" onClick={() => setIsMenuOpen(false)}>
                     Testimonials
                   </a>
-                </li>
+                </li> */}
                 <li className={styles.navItem}>
                   <a href="#contact" onClick={() => setIsMenuOpen(false)}>
                     Contact

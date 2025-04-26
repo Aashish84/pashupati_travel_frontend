@@ -108,7 +108,7 @@ export default function AdminFeaturedDestinations() {
             <tr key={dest.id}>
               <td>{dest.id}</td>
               <td>
-                <a href={`${import.meta.env.VITE_SERVER_URL}/file/${dest.image}`} target="_blank">
+                <a href={`${import.meta.env.VITE_SERVER_URL}/api/file/${dest.image}`} target="_blank">
                   click here
                 </a>
               </td>

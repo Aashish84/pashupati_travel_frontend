@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react"
 import styles from "./FeaturedDestinations.module.css"
+import axios from "axios";
 
 const destinations = [
   {
@@ -46,6 +48,22 @@ const destinations = [
 ]
 
 const FeaturedDestinations = () => {
+
+  const [destinations , setDestinations] = useState([]);
+
+  const fetchDestinations = async () => {
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/featuredDestination`);
+      setDestinations(data);
+    } catch (error) {
+      console.error("Failed to fetch featured destinations:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDestinations();
+  }, []);
+
   return (
     <section id="destinations" className={styles.destinations}>
       <div className={styles.container}>
@@ -58,7 +76,12 @@ const FeaturedDestinations = () => {
           {destinations.map((destination) => (
             <div key={destination.id} className={styles.destinationCard}>
               <div className={styles.imageContainer}>
-                <img src={destination.image || "/placeholder.svg"} alt={destination.name} />
+                {/* <img src={destination.image || "/placeholder.svg"} alt={destination.name} /> */}
+                <img
+                  src={`${import.meta.env.VITE_SERVER_URL}/api/file/${destination.image}`}
+                  alt={destination.destination}
+                  className={styles.image}
+                />
                 <div className={styles.price}>{destination.price}</div>
               </div>
               <div className={styles.cardContent}>
