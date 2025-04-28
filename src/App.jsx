@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import Admin from './pages/admin/Admin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminFeaturedDestinations from './pages/admin/AdminFeaturedDestinations';
+import AdminBanner from './pages/admin/AdminBanner';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/admin" element={<Admin />} >
               <Route path='dashboard' element={<AdminDashboard />}/>
               <Route path='featured' element={<AdminFeaturedDestinations />} />
+              <Route path='banner' element={<AdminBanner />} />
               <Route path="/admin/*" element={<h1>404 Page Not found in admin side</h1>} />
             </Route>
           </Route>
