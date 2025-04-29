@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react"
 import styles from "./ImageSlider.module.css"
+import axios from "axios"
 
-const slides = [
+const slidesData = [
   {
     id: 1,
     image: "/placeholder.svg?height=600&width=1200",
@@ -28,14 +29,30 @@ const slides = [
 ]
 
 const ImageSlider = () => {
+  const [slides , setSlides] = useState([])
   const [currentSlide, setCurrentSlide] = useState(0)
+
+  const fetchBanner = async () => {
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/banner`);
+      console.log("fetched data " , data);
+      
+      setSlides(data);
+    } catch (error) {
+      console.error("Failed to fetch banner data from api : ", error);
+    }
+  }
+
+  useEffect(()=>{
+    fetchBanner();
+  }, [])
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
     }, 5000)
     return () => clearInterval(interval)
-  }, [])
+  }, [slides])
 
   const goToSlide = (index) => {
     setCurrentSlide(index)
@@ -56,12 +73,16 @@ const ImageSlider = () => {
           <div
             key={slide.id}
             className={`${styles.slide} ${index === currentSlide ? styles.active : ""}`}
-            style={{ backgroundImage: `url(${slide.image})` }}
           >
+            <img
+              src={`${import.meta.env.VITE_SERVER_URL}/api/file/${slide.image}`}
+              alt={slide.title}
+              className={styles.image}
+            />
             <div className={styles.content}>
               <h2>{slide.title}</h2>
               <p>{slide.description}</p>
-              <button className={styles.cta}>{slide.cta}</button>
+              {/* <button className={styles.cta}>{slide.cta}</button> */}
             </div>
           </div>
         ))}
