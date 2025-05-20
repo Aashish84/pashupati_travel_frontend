@@ -58,16 +58,5 @@ export default function Login({ setRole }) {
                 </form>
             </div>
         </>
-
-        // <>
-        //     <div className={classes.test}>
-        //         <h1 className={`${classes.loginHeading}`}>login</h1>
-        //         <form onSubmit={handleSubmit}>
-        //             <input type="text" name="username" id="username" value={loginData.username} onChange={handleChange} placeholder="enter username" /><br />
-        //             <input type="text" name="password" id="password" value={loginData.password} onChange={handleChange} placeholder="enter password" /><br />
-        //             <input type="submit" value="submit" />
-        //         </form>
-        //     </div>
-        // </>
     )
 }

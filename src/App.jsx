@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
 import './css/App.css';
 
@@ -20,6 +20,7 @@ function App() {
       <Navbar />
       <div className="content">
         <Routes>
+        <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<Home />} />
 
           <Route element={<ProtectedRoute role={role} />}>
